@@ -164,7 +164,13 @@ and specify the claims field to map
 
 ```yml
 SilverStripe\SAML\Helpers\SAMLUserGroupMapper:
+# TODO is this diff to http://schemas.microsoft.com/ws/2008/06/identity/claims/groups ?
   group_claims_field: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/groups'
+# TODO add example like below
+  group_map:
+    Your-AD-Admin-Group-Name: 'Administrators'
+    Your-AD-Author-Group-Name: 'Content Authors'
+
 ```
 
 ### GUID Transformation

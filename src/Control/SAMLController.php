@@ -189,6 +189,7 @@ class SAMLController extends Controller
         $expiry = $auth->getLastAssertionNotOnOrAfter(); // Note: Expiry will always be stored and returned in UTC
 
         // Search for any SAMLResponse objects where the response ID is the same and the expiry is within the range
+        // TODO This isn't checking expiry?
         if (SAMLResponse::get()->filter(['ResponseID' => $responseId])->count() > 0) {
             // Response found, therefore this is a replay attack - log the error and return false so the user is denied
             throw new AcsFailure(sprintf(
@@ -236,6 +237,8 @@ class SAMLController extends Controller
             $attributes['GUID'][0] = $guid;
         }
         $this->extend('updateAttributes', $attributes);
+        // TODO should the chunk above be back in calling func & passed down here, so that the updated $attributes is what gets passed to SAMLUserGroupMapper?
+        // Or if these returned attrs are what SAMLUserGroupMapper should use, the below needs to support arrays instead of just getting item [0] out?
 
         $memberProperties = [];
 
